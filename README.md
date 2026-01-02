@@ -1,75 +1,75 @@
 # 🏠 Smart Home Dashboard
 
-Ein elegantes Wand-Dashboard für Raspberry Pi, das Netatmo-Wetterdaten, SolarEdge-PV-Produktion und astronomische Daten auf einem 7-Zoll-Display vereint.
+An elegant wall-mounted dashboard for Raspberry Pi that combines Netatmo weather data, SolarEdge PV production, and astronomical data on a 7-inch display.
 
 ![Dashboard Screenshot](screenshot.png)
 
 ## ✨ Features
 
-- **Netatmo Integration**: Temperatur, Luftfeuchtigkeit, CO₂, Luftdruck mit 72h-Barograph
-- **SolarEdge PV-Monitoring**: Aktuelle Leistung, Tagesgrafik, Statistiken
-- **Astronomie**: Sonnen-/Mondzeiten, Tageslänge, animierte Sonnen-/Mondposition
-- **Optimiert für Wandmontage**: 7-Zoll-Display, lesbar aus 2-3m Entfernung
-- **Robust**: Offline-Caching, intelligentes API-Rate-Limiting, automatische Wiederverbindung
+- **Netatmo Integration**: Temperature, humidity, CO₂, air pressure with 72h barograph
+- **SolarEdge PV Monitoring**: Live power, daily graph, statistics
+- **Astronomy**: Sunrise/sunset, moonrise/moonset, day length, animated sun/moon position
+- **Optimized for Wall Mounting**: 7-inch display, readable from 2-3 meters distance
+- **Robust**: Offline caching, smart API rate limiting, automatic reconnection
 
 ## 🖥️ Hardware
 
-- Raspberry Pi 3/4/5 (oder Zero 2 W)
-- 7-Zoll-Display (800x480 empfohlen)
-- Optional: Gehäuse für Wandmontage
+- Raspberry Pi 3/4/5 (or Zero 2 W)
+- 7-inch display (800x480 recommended)
+- Optional: Case for wall mounting
 
-## 📋 Voraussetzungen
+## 📋 Requirements
 
 - Python 3.9+
-- Netatmo Wetterstation
-- Optional: SolarEdge Wechselrichter mit API-Zugang
+- Netatmo Weather Station
+- Optional: SolarEdge inverter with API access
 
 ## 🚀 Installation
 
-### 1. Repository klonen
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/smarthome-dashboard.git
-cd smarthome-dashboard
+git clone https://github.com/mesc691/Smarthome-Dashboard.git
+cd Smarthome-Dashboard
 ```
 
-### 2. Abhängigkeiten installieren
+### 2. Install dependencies
 
 ```bash
-# System-Pakete
+# System packages
 sudo apt update
 sudo apt install python3-tk python3-pip
 
-# Python-Pakete
+# Python packages
 pip3 install requests python-dotenv skyfield
 ```
 
-### 3. Konfiguration
+### 3. Configuration
 
 ```bash
-# Beispiel-Konfiguration kopieren
+# Copy example configuration
 cp env.example .env
 
-# Konfiguration bearbeiten
+# Edit configuration
 nano .env
 ```
 
-Fülle alle Werte in `.env` aus (siehe Kommentare in der Datei).
+Fill in all values in `.env` (see comments in the file).
 
-### 4. Netatmo Authentifizierung
+### 4. Netatmo Authentication
 
-Beim ersten Start öffnet sich ein Browser-Fenster zur Netatmo-Authentifizierung:
+On first launch, a browser window opens for Netatmo authentication:
 
 ```bash
 python3 netatmo_dashboard.py
 ```
 
-Nach erfolgreicher Authentifizierung wird ein Token gespeichert und automatisch erneuert.
+After successful authentication, a token is saved and automatically renewed.
 
-### 5. Autostart einrichten (optional)
+### 5. Set up autostart (optional)
 
 ```bash
-# Systemd Service erstellen
+# Create systemd service
 sudo nano /etc/systemd/system/dashboard.service
 ```
 
@@ -82,7 +82,7 @@ After=graphical.target
 Type=simple
 User=pi
 Environment=DISPLAY=:0
-WorkingDirectory=/home/pi/smarthome-dashboard
+WorkingDirectory=/home/pi/Smarthome-Dashboard
 ExecStart=/usr/bin/python3 netatmo_dashboard.py
 Restart=always
 RestartSec=10
@@ -96,118 +96,118 @@ sudo systemctl enable dashboard
 sudo systemctl start dashboard
 ```
 
-## ⚙️ Konfiguration
+## ⚙️ Configuration
 
-Alle Einstellungen werden über die `.env` Datei gesteuert:
+All settings are controlled via the `.env` file:
 
-| Variable | Beschreibung | Erforderlich |
-|----------|--------------|--------------|
-| `LOCATION_LAT` | Breitengrad (z.B. 47.3769) | Ja |
-| `LOCATION_LON` | Längengrad (z.B. 8.5417) | Ja |
-| `CLIENT_ID` | Netatmo Client ID | Ja |
-| `CLIENT_SECRET` | Netatmo Client Secret | Ja |
-| `REDIRECT_URI` | OAuth Redirect URI | Ja |
-| `SOLAREDGE_SITE_ID` | SolarEdge Site ID | Nein |
-| `SOLAREDGE_API_KEY` | SolarEdge API Key | Nein |
-| `CONTACT_EMAIL` | Kontakt für API User-Agent | Nein |
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `LOCATION_LAT` | Latitude (e.g., 47.3769) | Yes |
+| `LOCATION_LON` | Longitude (e.g., 8.5417) | Yes |
+| `CLIENT_ID` | Netatmo Client ID | Yes |
+| `CLIENT_SECRET` | Netatmo Client Secret | Yes |
+| `REDIRECT_URI` | OAuth Redirect URI | Yes |
+| `SOLAREDGE_SITE_ID` | SolarEdge Site ID | No |
+| `SOLAREDGE_API_KEY` | SolarEdge API Key | No |
+| `CONTACT_EMAIL` | Contact for API User-Agent | No |
 
-## 📁 Dateien
+## 📁 Files
 
-Das Dashboard erstellt folgende Dateien im Arbeitsverzeichnis:
+The dashboard creates the following files in the working directory:
 
-- `access_token.json` - Netatmo OAuth Token (automatisch erneuert)
-- `dashboard_cache.json` - Offline-Cache für Messwerte
-- `pressure_history_7inch.json` - 72h Luftdruck-Historie
-- `pv_daily_data.json` - PV-Tagesdaten
-- `de421.bsp` - Skyfield Ephemeridendaten (wird automatisch geladen)
-- `archive/` - Lokales Messwertezeit-Archiv (JSONL)
-- `dashboard.log` - Log-Datei
+- `access_token.json` - Netatmo OAuth token (automatically renewed)
+- `dashboard_cache.json` - Offline cache for measurements
+- `pressure_history_7inch.json` - 72h air pressure history
+- `pv_daily_data.json` - PV daily data
+- `de421.bsp` - Skyfield ephemeris data (downloaded automatically)
+- `archive/` - Local measurement archive (JSONL)
+- `dashboard.log` - Log file
 
-## 🔧 Fehlerbehebung
+## 🔧 Troubleshooting
 
-### Display bleibt schwarz
+### Display stays black
 ```bash
-# DISPLAY-Variable prüfen
+# Check DISPLAY variable
 echo $DISPLAY
 export DISPLAY=:0
 ```
 
-### Netatmo-Token abgelaufen
+### Netatmo token expired
 ```bash
-# Token-Datei löschen, neu authentifizieren
+# Delete token file, re-authenticate
 rm access_token.json
 python3 netatmo_dashboard.py
 ```
 
-### SolarEdge zeigt keine Daten
-- API-Key und Site-ID in `.env` prüfen
-- SolarEdge API ist auf 300 Anfragen/Tag limitiert
+### SolarEdge shows no data
+- Check API key and Site ID in `.env`
+- SolarEdge API is limited to 300 requests/day
 
-### Skyfield Ephemeridendaten
+### Skyfield ephemeris data
 ```bash
-# Manuell herunterladen falls automatisch fehlschlägt
+# Download manually if automatic download fails
 wget https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de421.bsp
 ```
 
-## 📊 API-Nutzung
+## 📊 API Usage
 
-Das Dashboard ist auf schonende API-Nutzung optimiert:
+The dashboard is optimized for conservative API usage:
 
-- **Netatmo**: ~288 Anfragen/Tag (alle 5 min)
-- **SolarEdge**: ~280 Anfragen/Tag (intelligent verteilt nach Sonnenstand)
-- **met.no**: ~96 Anfragen/Tag (alle 15 min, nur für Astro-Daten)
+- **Netatmo**: ~288 requests/day (every 5 min)
+- **SolarEdge**: ~280 requests/day (intelligently distributed based on sun position)
+- **met.no**: ~96 requests/day (every 15 min, for astronomical data only)
 
-## 🛠️ Entwicklung
+## 🛠️ Development
 
 ```bash
-# Im Entwicklungsmodus starten (mit Logs)
+# Run in development mode (with logs)
 python3 netatmo_dashboard.py
 
-# Syntax prüfen
+# Check syntax
 python3 -m py_compile netatmo_dashboard.py
 ```
 
-## 📜 Lizenz
+## 📜 License
 
-MIT License - siehe [LICENSE](LICENSE)
+MIT License - see [LICENSE](LICENSE)
 
-## 🙏 Danksagungen
+## 🙏 Acknowledgments
 
-- [Netatmo](https://dev.netatmo.com/) für die Wetter-API
-- [SolarEdge](https://www.solaredge.com/) für die Monitoring-API
-- [met.no](https://api.met.no/) für die Sunrise API
-- [Skyfield](https://rhodesmill.org/skyfield/) für präzise Astronomieberechnungen
+- [Netatmo](https://dev.netatmo.com/) for the weather API
+- [SolarEdge](https://www.solaredge.com/) for the monitoring API
+- [met.no](https://api.met.no/) for the Sunrise API
+- [Skyfield](https://rhodesmill.org/skyfield/) for precise astronomical calculations
 
 ## 📝 Changelog
 
 ### v6.0
-- Intelligente PV-Abfrageverteilung nach Sonnenstand
-- Animierte Sonnen-/Mondposition
-- 72h-Barograph mit Temperaturüberlagerung
-- Robustes Offline-Caching
-- Vereinfachte Icon-Sprache
+- Smart PV query distribution based on sun position
+- Animated sun/moon position
+- 72h barograph with temperature overlay
+- Robust offline caching
+- Simplified icon design
 
 ---
 
-## 💬 Feedback & Beiträge
+## 💬 Feedback & Contributions
 
-Dieses Projekt ist aus einem persönlichen Bedürfnis entstanden und ich freue mich über jedes Feedback!
+This project started as a personal need and I appreciate any feedback!
 
-**Du nutzt das Dashboard?**
-- ⭐ Gib dem Projekt einen Stern auf GitHub
-- 📸 Teile ein Foto deiner Installation in den [Discussions](../../discussions)
-- 💡 Schlage neue Features vor via [Issues](../../issues)
+**Using the dashboard?**
+- ⭐ Give the project a star on GitHub
+- 📸 Share a photo of your installation in [Discussions](../../discussions)
+- 💡 Suggest new features via [Issues](../../issues)
 
-**Du hast einen Bug gefunden?**
-- 🐛 Erstelle ein [Issue](../../issues/new) mit:
-  - Beschreibung des Problems
-  - Fehlermeldung aus `dashboard.log`
-  - Deine Hardware (Pi-Modell, Display)
+**Found a bug?**
+- 🐛 Create an [Issue](../../issues/new) with:
+  - Description of the problem
+  - Error message from `dashboard.log`
+  - Your hardware (Pi model, display)
 
-**Du möchtest beitragen?**
-- 🔧 Pull Requests sind willkommen!
-- Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Details
+**Want to contribute?**
+- 🔧 Pull requests are welcome!
+- See [CONTRIBUTING.md](CONTRIBUTING.md) for details
 
-**Kontakt:**
-- GitHub Issues für technische Fragen
-- Discussions für allgemeinen Austausch
+**Contact:**
+- GitHub Issues for technical questions
+- Discussions for general exchange
