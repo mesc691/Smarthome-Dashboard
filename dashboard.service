@@ -1,0 +1,46 @@
+# =============================================================================
+# Smart Home Dashboard - Systemd Service
+# =============================================================================
+# Installation:
+#   sudo cp dashboard.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable dashboard
+#   sudo systemctl start dashboard
+# 
+# Status prüfen:
+#   sudo systemctl status dashboard
+#   journalctl -u dashboard -f
+# =============================================================================
+
+[Unit]
+Description=Smart Home Dashboard
+Documentation=https://github.com/yourusername/smarthome-dashboard
+After=graphical.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+
+# Arbeitsverzeichnis anpassen!
+WorkingDirectory=/home/pi/smarthome-dashboard
+
+# Display für GUI
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+
+# Dashboard starten
+ExecStart=/usr/bin/python3 netatmo_dashboard.py
+
+# Bei Absturz neu starten
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dashboard
+
+[Install]
+WantedBy=graphical.target

@@ -1,0 +1,6 @@
+# Smart Home Dashboard - Python Dependencies
+# Install with: pip3 install -r requirements.txt
+
+requests>=2.28.0
+python-dotenv>=1.0.0
+skyfield>=1.45
