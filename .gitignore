@@ -1,0 +1,54 @@
+# Credentials und Tokens (NIE committen!)
+.env
+access_token.json
+
+# Cache und temporäre Daten
+dashboard_cache.json
+pressure_history_7inch.json
+pv_daily_data.json
+archive/
+
+# Skyfield Ephemeridendaten (gross, wird automatisch geladen)
+*.bsp
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
